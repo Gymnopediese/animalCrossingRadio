@@ -4,48 +4,48 @@ import asyncio
 import os
 
 weather_emojis = {
-    "☀️": "NORMAL",  # Soleil
-    "⛅️": "NORMAL",  # Nuage avec soleil
-    "☁️": "NORMAL",  # Nuage
-    "🌤️": "NORMAL",  # Nuage avec soleil voilé
-    "🌥️": "NORMAL",  # Nuage avec soleil voilé
-    "🌦️": "NORMAL",  # Nuage avec pluie
-    "🌧️": "RAINY",  # Pluie
-    "⛈️": "RAINY",  # Orage
-    "🌩️": "RAINY",  # Éclair
-    "🌨️": "SNOWY",  # Neige
-    "❄️": "SNOWY",  # Flocon de neige
-    "🌫️": "NORMAL",  # Brouillard
-    "🌪️": "NORMAL",  # Tornade
-    "🌊": "NORMAL",  # Vague
-    "🌬️": "NORMAL",  # Vent soufflant vers la gauche
-    "💨": "NORMAL",  # Vent soufflant vers la droite
-    "🌀": "NORMAL",  # Cyclone
-    "🌈": "NORMAL",  # Arc-en-ciel
-    "☔": "RAINY",  # Parapluie avec gouttes de pluie
-    "☂️": "RAINY",  # Parapluie
-    "⚡": "RAINY",  # Éclair
-    "🌁": "NORMAL",  # Brouillard sur pont
-    "🌉": "NORMAL",  # Pont de nuit
-    "🌌": "NORMAL",  # Voie lactée
-    "🌠": "NORMAL",  # Étoile filante
-    "🎇": "NORMAL",  # Feu d'artifice
-    "🔥": "NORMAL",  # Feu
-    "❌": "NORMAL",  # Zone de danger
-    "☣️": "NORMAL",  # Symbole de danger biologique
-    "☢️": "NORMAL",  # Symbole de danger radioactif
-    "🔆": "NORMAL",  # Soleil avec rayons
-    "🔅": "NORMAL",  # Soleil avec petits rayons
-    "🌍": "NORMAL",  # Globe terrestre montrant l'Europe et l'Afrique
-    "🌎": "NORMAL",  # Globe terrestre montrant l'Amérique
-    "🌏": "NORMAL",  # Globe terrestre montrant l'Asie et l'Australie
-    "🌐": "NORMAL",  # Globe terrestre avec méridiens et parallèles
-    "🌋": "NORMAL",  # Volcan
-    "🗻": "NORMAL",  # Mont Fuji
-    "🏔️": "NORMAL",  # Montagne enneigée
-    "🏕️": "NORMAL",  # Camping
-    "🏖️": "NORMAL",  # Plage avec parasol
-    "✨": "NORMAL",
+    "☀️": "norm",  # Soleil
+    "⛅️": "norm",  # Nuage avec soleil
+    "☁️": "norm",  # Nuage
+    "🌤️": "norm",  # Nuage avec soleil voilé
+    "🌥️": "norm",  # Nuage avec soleil voilé
+    "🌦️": "norm",  # Nuage avec pluie
+    "🌧️": "rain",  # Pluie
+    "⛈️": "rain",  # Orage
+    "🌩️": "rain",  # Éclair
+    "🌨️": "snow",  # Neige
+    "❄️": "snow",  # Flocon de neige
+    "🌫️": "norm",  # Brouillard
+    "🌪️": "norm",  # Tornade
+    "🌊": "norm",  # Vague
+    "🌬️": "norm",  # Vent soufflant vers la gauche
+    "💨": "norm",  # Vent soufflant vers la droite
+    "🌀": "norm",  # Cyclone
+    "🌈": "norm",  # Arc-en-ciel
+    "☔": "rain",  # Parapluie avec gouttes de pluie
+    "☂️": "rain",  # Parapluie
+    "⚡": "rain",  # Éclair
+    "🌁": "norm",  # Brouillard sur pont
+    "🌉": "norm",  # Pont de nuit
+    "🌌": "norm",  # Voie lactée
+    "🌠": "norm",  # Étoile filante
+    "🎇": "norm",  # Feu d'artifice
+    "🔥": "norm",  # Feu
+    "❌": "norm",  # Zone de danger
+    "☣️": "norm",  # Symbole de danger biologique
+    "☢️": "norm",  # Symbole de danger radioactif
+    "🔆": "norm",  # Soleil avec rayons
+    "🔅": "norm",  # Soleil avec petits rayons
+    "🌍": "norm",  # Globe terrestre montrant l'Europe et l'Afrique
+    "🌎": "norm",  # Globe terrestre montrant l'Amérique
+    "🌏": "norm",  # Globe terrestre montrant l'Asie et l'Australie
+    "🌐": "norm",  # Globe terrestre avec méridiens et parallèles
+    "🌋": "norm",  # Volcan
+    "🗻": "norm",  # Mont Fuji
+    "🏔️": "norm",  # Montagne enneigée
+    "🏕️": "norm",  # Camping
+    "🏖️": "norm",  # Plage avec parasol
+    "✨": "norm",
 }
 async def getweather(time = 18):
     # declare the client. format defaults to the metric system (celcius, km/h, etc.)
@@ -58,7 +58,10 @@ async def getweather(time = 18):
             for hourly in forecast.hourly:
                 if hourly.time.hour >= time:
                     print(weather_emojis[f'{hourly.type!r}'])
-                    return weather_emojis[f'{hourly.type!r}']
+                    try:
+                        return weather_emojis[f'{hourly.type!r}']
+                    except:
+                        return "norm"
 
 
 

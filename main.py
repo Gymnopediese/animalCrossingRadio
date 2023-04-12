@@ -124,25 +124,32 @@ def get_time():
         _time += 12
     _time = str(_time) + suf
     return _time
-def get_file():
+def get_files():
     weither = asyncio.run(getweather())
     files = []
-    t_files = glob(f'osts/{get_time()}/*')
-    for file in t_files:
-        if (weither != "NORMAL" and weither in file)\
-            or (weither == "NORMAL" and not "RAINY" in file and not "SNOWY" in file):
-            files.append(file)
-    return files[randint(0, len(files) - 1)]
+    files += glob(f"Final/{weither}/{get_time()}/*")
+    if datetime.datetime.now().hour < 7 or datetime.datetime.now().hour > 17:
+        mores = glob(f"Final/{weither}/Night/*")
+    else:
+        mores = glob(f"Final/{weither}/Day/*")
+    mores += glob(f"Final/{weither}/Prologue/*")
+    random.shuffle(mores)
+    for i in range(int(len(files) / 2)):
+        files.append(mores[-1])
+        mores.pop()
+    random.shuffle(files)
+    return files
 
 def main():
     rtmp = Rtmp('rtmp://a.rtmp.youtube.com/live2/5myy-hmrh-mtmd-kxqu-60vb')
-    tfile = ""
+    files = get_files()
     while True:
-        file = get_file()
-        print(file)
-        if (file != tfile):
-            rtmp.v3(file)
-        tfile = file
+        thour = datetime.datetime.now().hour
+        rtmp.play_video(files[-1])
+        files.pop()
+        hour = datetime.datetime.now().hour
+        if files == [] or hour != thour:
+            files = get_files()
 
 if __name__ == '__main__':
     main()
